@@ -16,9 +16,11 @@ const Feed = () => {
                 <div className="col">
                     <h2>Feed</h2>
 
-                    {posts?.map((post) => (
-                        <Post key={post.id} post={post} />
-                    ))}
+                    {posts.length ? (
+                        posts?.map((post) => <Post key={post.id} post={post} />)
+                    ) : (
+                        <h1 className="text-center">No Post Found</h1>
+                    )}
                 </div>
             </div>
         </div>

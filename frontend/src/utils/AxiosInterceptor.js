@@ -22,7 +22,7 @@ export default (history) => {
         (error) => {
             if (
                 error.response.status === 502 ||
-                error.response.status === 403
+                error.response.status === 401
             ) {
                 const { msg } = error.response.data
                 if (msg) {
