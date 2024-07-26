@@ -3,7 +3,7 @@ To run this project:
 1. **Backend**:
    - Navigate to `/backend`: `cd /backend`
    - Install dependencies: `npm install`
-   - Create a database `social_media` and configure user and password accordingly on that db
+   - Create a mysql database `social_media` and configure user and password accordingly on that db
    - Copy environment file: `cp .env.example .env` and configure it
    - Start the server: `npm start`
 
