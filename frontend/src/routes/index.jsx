@@ -8,7 +8,7 @@ import PublicRoutes from './PublicRoutes'
 
 export default function Router() {
     const dispatch = useDispatch()
-    const [loading,setLoading] = useState(true)
+    const [loading, setLoading] = useState(true)
     const { token } = useSelector((state) => state.auth)
     useEffect(() => {
         if (token) {
@@ -17,7 +17,6 @@ export default function Router() {
             })()
         }
     }, [dispatch])
-    
-    console.log("Token",token)
+
     return <>{token ? <PrivateRoutes /> : <PublicRoutes />}</>
 }

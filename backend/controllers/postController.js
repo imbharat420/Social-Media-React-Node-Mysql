@@ -14,13 +14,34 @@ exports.createPost = async (req, res) => {
 
 exports.getPosts = async (req, res) => {
     try {
-        const posts = await Post.findAll({ include: ['user', 'likes'], order: [['createdAt', 'DESC']] })
-        res.json({ posts })
+
+        const currentPage = parseInt(req.query.currentPage, 10) || 1;
+        const perPage = parseInt(req.query.perPage, 10) || 20;
+        const offset = (currentPage - 1) * perPage;
+
+
+        const totalCount = await Post.count();
+
+
+        const posts = await Post.findAll({
+            include: ['user', 'likes'],
+            order: [['createdAt', 'DESC']],
+            limit: perPage,
+            offset: offset
+        });
+
+        res.json({
+            posts,
+            totalCount,
+            totalPages: Math.ceil(totalCount / perPage),
+            currentPage
+        });
     } catch (error) {
-        console.log(error)
-        res.status(500).json({ error: 'Error retrieving posts' })
+        console.log(error);
+        res.status(500).json({ error: 'Error retrieving posts' });
     }
-}
+};
+
 
 exports.likePost = async (req, res) => {
     try {
