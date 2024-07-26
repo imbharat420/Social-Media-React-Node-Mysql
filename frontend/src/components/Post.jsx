@@ -1,8 +1,12 @@
+import { useDispatch } from 'react-redux'
 import apiPost from '../api/post.api'
+import { getPosts } from '../store/features/PostSlice'
 import { Link } from 'react-router-dom'
 const Post = ({ post }) => {
+    const dispatch = useDispatch()
     const handleLike = async () => {
-        await apiPost.like(post.id)
+        await apiPost.like({ postId: post.id })
+        dispatch(getPosts())
     }
 
     return (
@@ -15,7 +19,7 @@ const Post = ({ post }) => {
                 </h5>
                 <p className="card-text">{post?.content}</p>
                 <button className="btn btn-primary" onClick={handleLike}>
-                    Like
+                    Like {post?.likes?.length}
                 </button>
             </div>
         </div>

@@ -1,16 +1,22 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import apiAuth from '../../api/auth.api'
+import errorHandler from '../../utils/errorHandler'
 
 export const getUser = createAsyncThunk('/auth/getUser', async () => {
     const { data } = await apiAuth.getProfile()
-    return data.data
+    return data.data.user
 })
 
 export const getUserById = createAsyncThunk(
     '/auth/getUserById',
-    async ({ uniqueId }) => {
-        const { data } = await apiAuth.getProfileById({ uniqueId })
-        return data.data
+    async ({ id }) => {
+        try {
+            const { data } = await apiAuth.getUserById({ id })
+            return data.data.user
+        } catch (err) {
+            console.log(err)
+            errorHandler(err)
+        }
     }
 )
 
@@ -19,14 +25,18 @@ const token = localStorage.getItem('token')
 const initialState = {
     token: token ?? '',
     user: {
-        _id: '',
+        id: '',
         username: '',
         email: '',
+        followers: [],
+        followings: []
     },
     userById: {
-        _id: '',
+        id: '',
         username: '',
         email: '',
+        followers: [],
+        followings: []
     },
 }
 

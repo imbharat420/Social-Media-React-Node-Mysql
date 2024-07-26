@@ -7,9 +7,11 @@ const apiAuth = {
     register: (value) => axios.post(API_URL + 'register', value),
 
     login: (value) => axios.post(API_URL + 'login', value),
-    // getProfile: () => AxiosInterceptor().get(API_URL + 'get-profile'),
-    // getProfileById: (value) =>
-    //     AxiosInterceptor().post(API_URL + 'profilebyid', value),
+    getProfile: () => AxiosInterceptor().get(API_BASE + '/users/me'),
+    getUserById: (value) =>
+        AxiosInterceptor().post(API_BASE + '/users/getUserById', value),
+    follow: (value) =>
+        AxiosInterceptor().post(API_BASE + `/users/${value.userId}/follow`, value),
 }
 
 export default apiAuth

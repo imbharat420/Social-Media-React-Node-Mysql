@@ -9,3 +9,8 @@ export const RegisterSchema = Yup.object().shape({
     email: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required'),
 })
+
+
+export const CreatePostSchema = Yup.object().shape({
+    content: Yup.string().required('Post is required'),
+})

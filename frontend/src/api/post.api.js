@@ -6,7 +6,7 @@ const apiPost = {
     add: (value) => AxiosInterceptor().post(API_URL, value),
     getAll: (value) => AxiosInterceptor().get(API_URL),
     like: (value) =>
-        AxiosInterceptor().post(API_URL + `/${value?.postId}/like`, value),
+        AxiosInterceptor().post(API_URL + `/${value?.postId}/like`),
 }
 
 export default apiPost

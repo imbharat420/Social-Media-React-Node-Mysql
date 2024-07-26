@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Post from './../../components/Post'
 import { getPosts } from '../../store/features/PostSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import CreatePost from './CreatePost'
 
 const Feed = () => {
     const dispatch = useDispatch()
@@ -14,6 +15,7 @@ const Feed = () => {
         <div className="container mt-5">
             <div className="row">
                 <div className="col">
+                    <CreatePost />
                     <h2>Feed</h2>
 
                     {posts.length ? (

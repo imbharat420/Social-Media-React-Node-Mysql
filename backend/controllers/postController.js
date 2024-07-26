@@ -14,7 +14,7 @@ exports.createPost = async (req, res) => {
 
 exports.getPosts = async (req, res) => {
     try {
-        const posts = await Post.findAll({ include: ['user', 'likes'] })
+        const posts = await Post.findAll({ include: ['user', 'likes'], order: [['createdAt', 'DESC']] })
         res.json({ posts })
     } catch (error) {
         console.log(error)
@@ -24,10 +24,18 @@ exports.getPosts = async (req, res) => {
 
 exports.likePost = async (req, res) => {
     try {
-        const { postId } = req.params
-        const like = await Like.create({ userId: req.userId, postId })
-        res.status(201).json({ like })
+        const { postId } = req.params;
+        const userId = req.userId;
+        const existingLike = await Like.findOne({ where: { userId, postId } });
+        if (existingLike) {
+            await existingLike.destroy();
+            res.status(200).json({ message: 'Like removed' });
+        } else {
+            const like = await Like.create({ userId, postId });
+            res.status(201).json({ like });
+        }
     } catch (error) {
-        res.status(500).json({ error: 'Error liking post' })
+        console.error('Error in liking/unliking post:', error);
+        res.status(500).json({ error: 'Error liking/unliking post' });
     }
-}
+};
